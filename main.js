@@ -4,16 +4,21 @@ const COLUMN_COUNT = 41,
     ROW_COUNT = 41,
     CELL_SIZE = 10,
     PADDING = 10,
-    TRACKER_COUNT = 2,
+    TRACKER_COUNT = document.querySelector('.trackers').value,
     WALL_COLOR = 'black',
     SPACE_COLOR = 'white';
 
 const canvas = document.querySelector('canvas'),
     context = canvas.getContext('2d'),
+    startBtn = document.querySelector('.start'),
     map = createMap(),
     trackers = [];
 
-init();
+clearCanvas();
+startBtn.addEventListener('click', function() {
+    init();
+    start();
+})
 
 function init() {
     canvas.width = PADDING * 2 + COLUMN_COUNT * CELL_SIZE;
@@ -37,8 +42,6 @@ function init() {
         trackers.push({ x: 0, y: 0 });
         // }
     }
-    console.log(trackers);
-    start();
 }
 
 function start() {
