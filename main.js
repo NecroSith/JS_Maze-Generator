@@ -63,19 +63,19 @@ function drawTracker() {
 }
 
 function moveTracker() {
-    let directions = ['left', 'right', 'up', 'down'];
+    let directions = [];
 
-    if (tracker.x <= 0) {
-        directions = [...directions.slice(0, 'left'), ...directions.slice(directions.indexOf('left') + 1)];
+    if (tracker.x > 0) {
+        directions.push('left');
     }
-    if (tracker.x >= COLUMN_COUNT - 1) {
-        directions = [...directions.slice(0, 'right'), ...directions.slice(directions.indexOf('right') + 1)];
+    if (tracker.x < COLUMN_COUNT - 1) {
+        directions.push('right');
     }
-    if (tracker.y <= 0) {
-        directions = [...directions.slice(0, 'up'), ...directions.slice(directions.indexOf('up') + 1)];
+    if (tracker.y > 0) {
+        directions.push('up');
     }
-    if (tracker.y >= ROW_COUNT - 1) {
-        directions = [...directions.slice(0, 'down'), ...directions.slice(directions.indexOf('down') + 1)];
+    if (tracker.y < ROW_COUNT - 1) {
+        directions.push('down');
     }
 
     const direction = getRandomFrom(directions);
@@ -128,8 +128,8 @@ function isWall(x, y) {
 }
 
 function setSpace(x, y) {
-    drawRectangle(SPACE_COLOR, x, y, CELL_SIZE, CELL_SIZE);
-    return map[x][y] = 'space';
+    // drawRectangle(SPACE_COLOR, x, y, CELL_SIZE, CELL_SIZE);
+    map[x][y] = 'space';
 }
 
 function drawRectangle(fillColor, startX, startY, endX, endY) {
