@@ -1,8 +1,8 @@
 'use strict';
 
-const COLUMN_COUNT = 10,
-    ROW_COUNT = 10,
-    CELL_SIZE = 50,
+const COLUMN_COUNT = 41,
+    ROW_COUNT = 41,
+    CELL_SIZE = 10,
     PADDING = 10,
     WALL_COLOR = 'black',
     SPACE_COLOR = 'white';
@@ -53,7 +53,12 @@ function createMap() {
 function drawMap() {
     for (let i = 0; i < COLUMN_COUNT; i++) {
         for (let j = 0; j < ROW_COUNT; j++) {
-            drawRectangle(WALL_COLOR, PADDING + i * CELL_SIZE, PADDING + j * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            if (isWall(i, j)) {
+                drawRectangle(WALL_COLOR, PADDING + i * CELL_SIZE, PADDING + j * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            } else {
+                drawRectangle(SPACE_COLOR, PADDING + i * CELL_SIZE, PADDING + j * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            }
+
         }
     }
 }
@@ -68,13 +73,13 @@ function moveTracker() {
     if (tracker.x > 0) {
         directions.push('left');
     }
-    if (tracker.x < COLUMN_COUNT - 1) {
+    if (tracker.x < COLUMN_COUNT - 2) {
         directions.push('right');
     }
     if (tracker.y > 0) {
         directions.push('up');
     }
-    if (tracker.y < ROW_COUNT - 1) {
+    if (tracker.y < ROW_COUNT - 2) {
         directions.push('down');
     }
 
@@ -128,7 +133,6 @@ function isWall(x, y) {
 }
 
 function setSpace(x, y) {
-    // drawRectangle(SPACE_COLOR, x, y, CELL_SIZE, CELL_SIZE);
     map[x][y] = 'space';
 }
 
