@@ -1,50 +1,46 @@
 'use strict';
 
-const COLUMN_COUNT = 41,
-    ROW_COUNT = 41,
+const COLUMN_COUNT = 26,
+    ROW_COUNT = 26,
     CELL_SIZE = 10,
     PADDING = 10,
-    TRACKER_COUNT = document.querySelector('.trackers').value,
     WALL_COLOR = 'black',
     SPACE_COLOR = 'white';
+
+let TRACKER_COUNT = 1;
 
 const canvas = document.querySelector('canvas'),
     context = canvas.getContext('2d'),
     startBtn = document.querySelector('.start'),
+    stopBtn = document.querySelector('.stop');
+let stopped = false,
     map = createMap(),
     trackers = [];
 
+init();
 clearCanvas();
 startBtn.addEventListener('click', function() {
-    init();
+    TRACKER_COUNT = document.querySelector('.trackers').value;
+    clearAll();
+    console.log(TRACKER_COUNT);
     start();
+});
+
+stopBtn.addEventListener('click', function() {
+    stopped = true;
 })
 
 function init() {
     canvas.width = PADDING * 2 + COLUMN_COUNT * CELL_SIZE;
     canvas.height = PADDING * 2 + ROW_COUNT * CELL_SIZE;
-
-    console.log(canvas.width);
-    console.log(canvas.height);
-
-    for (let i = 1; i <= TRACKER_COUNT; i++) {
-        // if (i % 4 === 0) {
-        //     console.log('4 check');
-        //     trackers.push({ x: 0, y: ROW_COUNT - 1 });
-        // } else if (i % 3 === 0) {
-        //     console.log('3 check');
-        //     trackers.push({ x: COLUMN_COUNT - 1, y: ROW_COUNT - 1 });
-        // } else if (i % 2 === 0) {
-        //     console.log('2 check');
-        //     trackers.push({ x: COLUMN_COUNT - 1, y: 5 });
-        // } else {
-        //     console.log('1 check');
-        trackers.push({ x: 0, y: 0 });
-        // }
-    }
 }
 
 function start() {
+    trackers = [];
+    for (let i = 1; i <= TRACKER_COUNT; i++) {
+        trackers.push({ x: 0, y: 0 });
+    }
+    stopped = false;
     requestAnimationFrame(tick);
 }
 
@@ -54,7 +50,7 @@ function tick(timestamp) {
     clearCanvas();
     drawMap();
 
-    if (!mazeFinished()) {
+    if (!mazeFinished() && !stopped) {
         drawTrackers();
         requestAnimationFrame(tick);
     }
@@ -62,7 +58,6 @@ function tick(timestamp) {
 
 function clearCanvas() {
     drawRectangle(WALL_COLOR, 0, 0, canvas.width, canvas.height);
-    // drawRectangle(SPACE_COLOR, PADDING, PADDING, canvas.width - PADDING * 2, canvas.height - PADDING * 2);
 }
 
 function createMap() {
@@ -145,6 +140,15 @@ function moveTrackers() {
                 tracker.y += 2;
                 break;
         }
+    }
+}
+
+function clearAll() {
+    map = createMap();
+    clearCanvas();
+    for (let tracker of trackers) {
+        tracker.x = 0;
+        tracker.y = 0;
     }
 }
 

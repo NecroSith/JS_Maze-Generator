@@ -5,16 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Maze Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <h1>Maze Generator</h1>
     <canvas></canvas>
-    <button class="start">Generate!</button>
-    <label for="">
-        <span>Enter number of trackers</span>
-        <input type="text" class="trackers" value="1">
-    </label>
+    <div class="wrapper">
+        <div class="button-wrapper">
+            <button class="start">Generate!</button>
+            <button class="stop">Stop!</button>
+        </div>
+        <label for="">
+            <span>Trackers</span>
+            <input type="number" class="trackers" value="1" min="1" max="50">
+        </label>
+    </div>
+
     <script src="main.js"></script>
 </body>
 
